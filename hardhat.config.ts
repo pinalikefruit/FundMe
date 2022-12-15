@@ -4,6 +4,10 @@ import "hardhat-deploy"
 import "@typechain/hardhat"
 import "@nomiclabs/hardhat-ethers"
 import "dotenv/config"
+import "@nomiclabs/hardhat-waffle"
+import "@nomiclabs/hardhat-etherscan"
+import "hardhat-gas-reporter"
+import "solidity-coverage"
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ""
 const GOERLI_RPC_URL =

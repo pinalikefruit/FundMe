@@ -11,6 +11,7 @@ import "./PriceConverter.sol";
 
 error FundMe__NotOwner();
 
+// add receive and fallback
 contract FundMe {
     // Type Declarations
     using PriceConverter for uint256;
@@ -44,20 +45,6 @@ contract FundMe {
     }
 
     function withdraw() public onlyOwner {
-        for (
-            uint256 funderIndex = 0;
-            funderIndex < s_funders.length;
-            funderIndex++
-        ) {
-            address funder = s_funders[funderIndex];
-            s_addressToAmountFunded[funder] = 0;
-        }
-        s_funders = new address[](0);
-        (bool success, ) = i_owner.call{value: address(this).balance}("");
-        require(success);
-    }
-
-    function cheaperWithdraw() public onlyOwner {
         address[] memory funders = s_funders;
         for (
             uint256 funderIndex = 0;
@@ -65,7 +52,7 @@ contract FundMe {
             funderIndex++
         ) {
             address funder = funders[funderIndex];
-            s_addressToAmountFunded[funder];
+            s_addressToAmountFunded[funder] = 0;
         }
         s_funders = new address[](0);
         (bool success, ) = i_owner.call{value: address(this).balance}("");
@@ -83,16 +70,8 @@ contract FundMe {
         return s_addressToAmountFunded[fundingAddress];
     }
 
-    function getVersion() public view returns (uint256) {
-        return s_priceFeed.version();
-    }
-
     function getFunder(uint256 index) public view returns (address) {
         return s_funders[index];
-    }
-
-    function getOwner() public view returns (address) {
-        return i_owner;
     }
 
     function getPriceFeed() public view returns (AggregatorV3Interface) {

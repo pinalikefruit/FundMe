@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types"
 
-const DECIMALS:string = "18"
+const DECIMALS:string = "18";
 const INITIAL_PRICE:string = "2000000000000000000000"
 
 const deployMocks: DeployFunction = async function(
